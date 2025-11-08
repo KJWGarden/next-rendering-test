@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 오픈 미션: 고난도 문제 해커톤
 
-## Getting Started
+**🎯 “내가 만든 웹앱이 느린 이유를 이해해보고 싶다.”**
 
-First, run the development server:
+### **Next.js 렌더링 방식별 성능 비교 실험**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> “같은 페이지를 SSR, ISR, CSR, SSG로 각각 구현해보고
+>
+> 어떤 방식이 실제 유저 경험에 가장 좋은지 직접 측정한다.”
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 프로젝트 개요
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### **문제 인식**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 내가 만든 Next.js 웹앱이 느리게 느껴졌는데,
+  “어디서 느린 걸까?” “서버 때문일까, 클라이언트 때문일까?”
+  라는 질문에서 출발함.
+- 성능 개선을 시도하려면 먼저 **렌더링 방식이 실제로 어떤 차이를 만드는지** 알아야 한다고 생각함.
 
-## Learn More
+### **프로젝트 목표**
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js의 **렌더링 방식(SSR, SSG, ISR, CSR)** 을 직접 비교 분석한다.
+- 성능 지표 (TTFB, LCP, FCP, CLS 등)를 측정하여
+  **렌더링 방식 선택이 사용자 경험에 미치는 영향**을 시각적으로 보여준다
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## **실험 설계**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 항목                   | 내용                                        |
+| ---------------------- | ------------------------------------------- |
+| **테스트 페이지**      | 단일 페이지(ex: 게시글 목록)                |
+| **데이터 소스**        | Supabase (게시글 20개 정도)                 |
+| **렌더링 방식별 구현** | `/csr`, `/ssr`, `/isr`, `/ssg` 4개 라우트   |
+| **측정 지표**          | Lighthouse + Web Vitals API + Supabase 로그 |
+| **결과 시각화**        | Recharts or Chart.js를 사용해 그래프로 표시 |
