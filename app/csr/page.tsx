@@ -28,7 +28,7 @@ export default function CSRPage() {
   }, []);
   return (
     <main className="p-6">
-      <h1 className="text-xl font-bold">CSR (Client-Side Rendering)</h1>
+      <h1 className="text-xl font-bold mb-4">CSR (Client-Side Rendering)</h1>
       <PostList posts={posts} />
     </main>
   );
