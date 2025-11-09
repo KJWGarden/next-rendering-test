@@ -3,13 +3,7 @@
 import { supabase } from "@/lib/supabaseClient";
 import { useEffect, useState } from "react";
 import PostList from "../component/PostList";
-
-type Post = {
-  id: number;
-  title: string;
-  content: string;
-  created_at: string;
-};
+import { Post } from "@/type/type";
 
 export default function CSRPage() {
   const [posts, setPosts] = useState<Post[]>([]);

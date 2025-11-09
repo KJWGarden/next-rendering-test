@@ -1,9 +1,4 @@
-type Post = {
-  id: number;
-  title: string;
-  content: string;
-  created_at: string;
-};
+import { Post } from "@/type/type";
 
 export default function PostList({ posts }: { posts: Post[] }) {
   return (
