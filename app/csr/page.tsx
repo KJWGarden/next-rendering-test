@@ -15,16 +15,49 @@ export default function CSRPage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    async function fetchPosts() {
-      const { data, error } = await supabase.from("posts").select("*");
-      if (error) {
-        console.error("fething 하는중 오류 발생 :", error);
-      } else if (data) {
-        setPosts(data);
+    async function fetchAllPosts() {
+      try {
+        const allPosts: Post[] = [];
+        const limit = 1000;
+
+        // 총 개수 확인
+        const { count } = await supabase
+          .from("posts")
+          .select("*", { count: "exact", head: true });
+
+        if (!count) {
+          console.warn("총 개수를 가져올 수 없습니다.");
+          return;
+        }
+
+        // 1000개씩 분할 요청
+        const totalBatches = Math.ceil(count / limit);
+
+        for (let i = 0; i < totalBatches; i++) {
+          const from = i * limit;
+          const to = from + limit - 1;
+          const { data, error } = await supabase
+            .from("posts")
+            .select("*")
+            .range(from, to)
+            .order("id", { ascending: true });
+
+          if (error) {
+            console.error(`Batch ${i + 1} 요청 중 오류:`, error);
+            break;
+          }
+
+          if (data) allPosts.push(...data);
+        }
+
+        setPosts(allPosts);
+      } catch (err) {
+        console.error("fetchAllPosts 오류:", err);
+      } finally {
       }
     }
 
-    fetchPosts();
+    fetchAllPosts();
   }, []);
   return (
     <main className="p-6">
