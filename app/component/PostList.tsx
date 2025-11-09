@@ -7,12 +7,14 @@ type Post = {
 
 export default function PostList({ posts }: { posts: Post[] }) {
   return (
-    <ul>
+    <ul className="space-y-3">
       {posts.map((post) => (
-        <li key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.content}</p>
-          <span>{new Date(post.created_at).toLocaleString()}</span>
+        <li key={post.id} className="border rounded p-3">
+          <h2 className="font-semibold text-lg">{post.title}</h2>
+          <p className="text-sm text-gray-600">{post.content}</p>
+          <span className="text-xs text-gray-400">
+            {new Date(post.created_at).toLocaleString()}
+          </span>
         </li>
       ))}
     </ul>
