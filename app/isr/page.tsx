@@ -43,7 +43,7 @@ async function fetchAllPosts(): Promise<Post[]> {
 }
 
 export default async function ISRPage() {
-  const { data: posts } = await supabase.from("posts").select("*");
+  const posts = await fetchAllPosts();
   const now = new Date().toLocaleTimeString("ko-KR");
 
   return (
