@@ -35,11 +35,7 @@ const network3G = [
 export default function RenderingChart() {
   const [mounted, setMounted] = useState(false);
 
-  // Hydration 오류를 방지하기 위해 클라이언트에서만 마운트 상태를 확인
-  // 이 패턴은 Next.js에서 hydration 오류를 해결하기 위한 표준 방법입니다
   useEffect(() => {
-    // setState is called in a microtask, still after browser paint
-    // This avoids the direct setState anti-pattern
     setTimeout(() => setMounted(true), 0);
   }, []);
 
@@ -126,15 +122,34 @@ interface ChartProps {
   metricKey: keyof ChartData;
 }
 
+// 각 메트릭의 단위 매핑
+const metricUnits: Record<string, string> = {
+  LCP: "s",
+  FCP: "s",
+  TBT: "ms",
+  TTFB: "ms",
+};
+
 function Chart({ data, metricKey }: ChartProps) {
+  const unit = metricUnits[metricKey as string] || "";
+  const metricName = metricKey as string;
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="method" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
+        <YAxis
+          label={{
+            value: `${metricName} (${unit})`,
+            angle: -90,
+            position: "insideLeft",
+          }}
+        />
+        <Tooltip
+          formatter={(value: number) => [`${value} ${unit}`, metricName]}
+        />
+        <Legend formatter={() => `${metricName} (${unit})`} />
         <Bar dataKey={metricKey} fill="#3b82f6" />
       </BarChart>
     </ResponsiveContainer>
