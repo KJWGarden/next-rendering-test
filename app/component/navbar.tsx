@@ -15,10 +15,8 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
-  // Hydration 오류를 방지하기 위해 클라이언트에서만 마운트 상태를 확인
-  // 이 패턴은 Next.js에서 hydration 오류를 해결하기 위한 표준 방법입니다
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => setMounted(true), 0);
   }, []);
 
   return (
