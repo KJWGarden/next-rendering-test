@@ -32,3 +32,7 @@
 | **렌더링 방식별 구현** | `/csr`, `/ssr`, `/isr`, `/ssg` 4개 라우트   |
 | **측정 지표**          | Lighthouse + Web Vitals API + Supabase 로그 |
 | **결과 시각화**        | Recharts or Chart.js를 사용해 그래프로 표시 |
+
+
+**실험 과정 정리 및 결과 회고 Notion**
+> https://www.notion.so/2a4f47dcd262803ebb19f3890fd985d9?source=copy_link
