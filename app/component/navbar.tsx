@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,7 +12,14 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  // Hydration 오류를 방지하기 위해 클라이언트에서만 마운트 상태를 확인
+  // 이 패턴은 Next.js에서 hydration 오류를 해결하기 위한 표준 방법입니다
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="border-b bg-background">
@@ -22,7 +30,7 @@ export default function Navbar() {
           </Link>
           <div className="flex gap-1">
             {navItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = mounted && pathname === item.href;
               return (
                 <Link
                   key={item.href}

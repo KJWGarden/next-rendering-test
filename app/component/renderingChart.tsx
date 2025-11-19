@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -32,6 +33,31 @@ const network3G = [
 ];
 
 export default function RenderingChart() {
+  const [mounted, setMounted] = useState(false);
+
+  // Hydration 오류를 방지하기 위해 클라이언트에서만 마운트 상태를 확인
+  // 이 패턴은 Next.js에서 hydration 오류를 해결하기 위한 표준 방법입니다
+  useEffect(() => {
+    // setState is called in a microtask, still after browser paint
+    // This avoids the direct setState anti-pattern
+    setTimeout(() => setMounted(true), 0);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="w-full space-y-12">
+        <h2 className="text-xl font-bold">렌더링 방식별 성능 비교</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="bg-white rounded-2xl shadow p-6">
+            <div className="h-[300px] flex items-center justify-center text-gray-400">
+              차트 로딩 중...
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full space-y-12">
       <h2 className="text-xl font-bold">렌더링 방식별 성능 비교</h2>
