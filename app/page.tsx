@@ -4,7 +4,9 @@ export default function Home() {
   return (
     <main className="w-full h-full">
       <Navbar />
-      <RenderingMetricsChart />
+      <div className="container mx-auto px-4 py-8">
+        <RenderingMetricsChart />
+      </div>
     </main>
   );
 }
