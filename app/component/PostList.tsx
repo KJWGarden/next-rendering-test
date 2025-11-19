@@ -13,7 +13,13 @@ export default function PostList({ posts }: { posts: Post[] }) {
             className="w-48 h-36 object-cover rounded-md"
           />
           <span className="text-xs text-gray-400">
-            {new Date(post.created_at).toLocaleString()}
+            {new Date(post.created_at).toLocaleString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </span>
         </li>
       ))}
